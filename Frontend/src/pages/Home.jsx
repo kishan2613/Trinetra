@@ -1,8 +1,9 @@
-import React from "react";
+import { Link } from "react-router-dom";
+
 import { motion } from "framer-motion";
 import { ShieldCheck, Activity, Eye } from "lucide-react";
 import Herov from "../assets/Hero.mp4";
-
+import HeroJ from "../assets/HeroJ.webm";
 
 const Hero = () => {
   return (
@@ -74,9 +75,11 @@ const Hero = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
       >
+        <Link to="/signup">
         <button className="px-8 py-4 rounded-xl bg-cyan-500 text-black font-semibold hover:bg-cyan-400 transition">
           Get Started
         </button>
+        </Link>
         <button className="px-8 py-4 rounded-xl border border-cyan-400 text-cyan-400 font-semibold hover:bg-cyan-400/10 transition">
           Learn More
         </button>
@@ -106,6 +109,7 @@ const Features = () => {
 
   return (
     <section className="bg-black text-white py-20 relative z-10">
+         
       <div className="max-w-6xl mx-auto px-6">
         <h2 className="text-4xl font-bold text-center bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
           Why Trinetra?
@@ -146,25 +150,41 @@ const About = () => {
 
 const FooterCTA = () => {
   return (
-    <footer className="bg-black text-white py-16 relative z-10">
-      <div className="max-w-4xl mx-auto text-center px-6">
-        <h2 className="text-3xl font-bold">Ready to Secure Your Space?</h2>
-        <p className="mt-4 text-gray-400">
-          Join the future of intelligent surveillance today.
-        </p>
-        <div className="mt-6 flex justify-center gap-4">
-          <button className="px-8 py-4 rounded-xl bg-purple-600 text-white font-semibold hover:bg-purple-500 transition">
-            Request Demo
-          </button>
-          <button className="px-8 py-4 rounded-xl border border-cyan-400 text-cyan-400 font-semibold hover:bg-cyan-400/10 transition">
-            Contact Us
-          </button>
-        </div>
-        <p className="mt-8 text-gray-500 text-sm">
-          © {new Date().getFullYear()} Trinetra. All rights reserved.
-        </p>
-      </div>
-    </footer>
+   <footer className="relative bg-black text-white py-16 overflow-hidden">
+  {/* Background video */}
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="absolute inset-0 w-full h-full object-cover opacity-70 p-8"
+  >
+    <source src={HeroJ} type="video/mp4" />
+  </video>
+
+  {/* Overlay (optional, for readability) */}
+  <div className="absolute inset-0 bg-black/60"></div>
+
+  {/* Foreground content */}
+  <div className="relative z-10 max-w-4xl mx-auto text-center px-6">
+    <h2 className="text-3xl font-bold">Ready to Secure Your Space?</h2>
+    <p className="mt-4 text-gray-300">
+      Join the future of intelligent surveillance today.
+    </p>
+    <div className="mt-6 flex justify-center gap-4">
+      <button className="px-8 py-4 rounded-xl bg-purple-600 text-white font-semibold hover:bg-purple-500 transition">
+        Request Demo
+      </button>
+      <button className="px-8 py-4 rounded-xl border border-cyan-400 text-cyan-400 font-semibold hover:bg-cyan-400/10 transition">
+        Contact Us
+      </button>
+    </div>
+    <p className="mt-8 text-gray-400 text-sm">
+      © {new Date().getFullYear()} Trinetra. All rights reserved.
+    </p>
+  </div>
+</footer>
+
   );
 };
 
