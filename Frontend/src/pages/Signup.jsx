@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import HeroJ from "../assets/HeroJ.webm";
-import Navbar from "../components/common/Navbar";
+import { Link } from "react-router-dom";
+
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    detectionType: "",
+    detectionTypes: [], // multiple selections
   });
 
   const detectionOptions = [
@@ -18,6 +20,20 @@ const Signup = () => {
     "Vehicle Anomaly Detection",
   ];
 
+  // Toggle selection
+  const handleSelect = (option) => {
+    setFormData((prev) => {
+      if (prev.detectionTypes.includes(option)) {
+        return {
+          ...prev,
+          detectionTypes: prev.detectionTypes.filter((item) => item !== option),
+        };
+      } else {
+        return { ...prev, detectionTypes: [...prev.detectionTypes, option] };
+      }
+    });
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -26,13 +42,11 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    alert("Signup successful!");
+    alert(`Signup successful!\nSelected: ${formData.detectionTypes.join(", ")}`);
   };
 
   return (
-    
     <div className="min-h-screen flex mt-18">
-    <Navbar />
 
       {/* Left Side - Video & Text */}
       <div className="relative w-[60%] hidden lg:flex items-center justify-center overflow-hidden">
@@ -108,34 +122,42 @@ const Signup = () => {
               />
             </div>
 
-            {/* Detection Type Dropdown */}
+            {/* Detection Types - Button Selector */}
             <div>
-              <label className="block text-gray-300 mb-2">
-                Suspicious Detection Type
+              <label className="block text-gray-300 mb-3">
+                Suspicious Detection Types
               </label>
-              <select
-                name="detectionType"
-                value={formData.detectionType}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-600 focus:border-purple-400 focus:ring-2 focus:ring-purple-500 outline-none transition"
-              >
-                <option value="">-- Select Detection Type --</option>
-                {detectionOptions.map((option, idx) => (
-                  <option key={idx} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+              <div className="flex flex-wrap gap-3">
+                {detectionOptions.map((option, idx) => {
+                  const isSelected = formData.detectionTypes.includes(option);
+                  return (
+                    <button
+                      type="button"
+                      key={idx}
+                      onClick={() => handleSelect(option)}
+                      className={`px-4 py-2 rounded-lg border text-sm font-medium transition 
+                        ${
+                          isSelected
+                            ? "bg-purple-600 text-white border-purple-500"
+                            : "bg-gray-800 text-gray-300 border-gray-600 hover:bg-gray-700"
+                        }`}
+                    >
+                      {option}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Submit Button */}
+            <Link to="/dashboard">
             <button
               type="submit"
               className="w-full py-3 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-500 transition"
             >
               Sign Up
             </button>
+            </Link>
           </form>
         </div>
       </div>
